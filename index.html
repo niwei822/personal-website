@@ -71,75 +71,76 @@
 		</section>
 
 		<!-- Form Section -->
-<section id="three">
-	<h2>Get In Touch</h2>
-	<p>I'd love to hear from you! Whether you have a question, a collaboration idea, or just want to say hello, feel free to reach out. You can contact me through the form below or connect with me on LinkedIn. I'm always open to new opportunities and interesting conversations.</p>
-	<div class="row">
-	  <div class="col-8 col-12-small">
-		<form name="contact" method="POST" data-netlify="true">
-		  <input type="hidden" name="form-name" value="contact" /> <!-- Hidden field for Netlify -->
-		  <div class="row gtr-uniform gtr-50">
-			<div class="col-6 col-12-xsmall">
-			  <input type="text" name="name" id="name" placeholder="Name" required />
+		<section id="three">
+			<h2>Get In Touch</h2>
+			<p>I'd love to hear from you! Whether you have a question, a collaboration idea, or just want to say hello, feel free to reach out. You can contact me through the form below or connect with me on LinkedIn. I'm always open to new opportunities and interesting conversations.</p>
+			<div class="row">
+			  <div class="col-8 col-12-small">
+				<form name="contact" method="POST" action="https://formspree.io/f/mdknarzq" onsubmit="handleSubmit(event)">
+				  <input type="hidden" name="_subject" value="New submission!" />
+				  <input type="hidden" name="_captcha" value="false" />
+				  <div class="row gtr-uniform gtr-50">
+					<div class="col-6 col-12-xsmall">
+					  <input type="text" name="name" id="name" placeholder="Name" required />
+					</div>
+					<div class="col-6 col-12-xsmall">
+					  <input type="email" name="email" id="email" placeholder="Email" required />
+					</div>
+					<div class="col-12">
+					  <textarea name="message" id="message" placeholder="Message" rows="4" required></textarea>
+					</div>
+				  </div>
+				  <div class="actions-container">
+					<ul class="actions">
+					  <li><input type="submit" value="Send Message" /></li>
+					</ul>
+				  </div>
+				  <div id="success-message" style="display: none; color: green;">Thank you for your message!</div>
+				  <div id="error-message" style="display: none; color: red;">There was a problem with your message. Please try again.</div>
+				</form>
+			  </div>
+			  <div class="col-4 col-12-small">
+				<img src="images/email2.png" alt="contact me" style="width: 80%;">
+			  </div>
 			</div>
-			<div class="col-6 col-12-xsmall">
-			  <input type="email" name="email" id="email" placeholder="Email" required />
-			</div>
-			<div class="col-12">
-			  <textarea name="message" id="message" placeholder="Message" rows="4" required></textarea>
-			</div>
-		  </div>
-		  <div class="actions-container">
-			<ul class="actions">
-			  <li><input type="submit" value="Send Message" /></li>
-			</ul>
-		  </div>
-		  <div id="success-message" style="display: none; color: green;">Thank you for your message!</div>
-		  <div id="error-message" style="display: none; color: red;">There was a problem with your message. Please try again.</div>
-		</form>
-	  </div>
-	  <div class="col-4 col-12-small">
-		<img src="images/email2.png" alt="contact me" style="width: 80%;">
-	  </div>
-	</div>
-  </section>
-  
-  <script>
-	const handleSubmit = (event) => {
-	  event.preventDefault();
-  
-	  const myForm = event.target;
-	  const formData = new FormData(myForm);
-	  
-	  fetch("/", {
-		method: "POST",
-		headers: { "Content-Type": "application/x-www-form-urlencoded" },
-		body: new URLSearchParams(formData).toString(),
-	  })
-	  .then(response => {
-		if (response.ok) {
-		  // Show success message
-		  document.getElementById('success-message').style.display = 'block';
-		  document.getElementById('error-message').style.display = 'none';
-		  myForm.reset();
-		  console.log("Form successfully submitted");
-		} else {
-		  throw new Error('Network response was not ok.');
-		}
-	  })
-	  .catch((error) => {
-		// Show error message
-		document.getElementById('error-message').style.display = 'block';
-		document.getElementById('success-message').style.display = 'none';
-		console.error('There was a problem with the fetch operation:', error);
-		alert(error); // Optional: for quick debugging
-	  });
-	};
-  
-	document
-	  .querySelector("form")
-	  .addEventListener("submit", handleSubmit);
-  </script>
+		  </section>
+		  <script>
+			const handleSubmit = (event) => {
+			  event.preventDefault();
+		  
+			  const myForm = event.target;
+			  const formData = new FormData(myForm);
+		  
+			  fetch(myForm.action, {
+				method: "POST",
+				headers: { "Accept": "application/json" },
+				body: formData
+			  })
+			  .then(response => {
+				if (response.ok) {
+				  // Show success message
+				  document.getElementById('success-message').style.display = 'block';
+				  document.getElementById('error-message').style.display = 'none';
+				  myForm.reset();
+				  console.log("Form successfully submitted");
+				} else {
+				  throw new Error('Network response was not ok.');
+				}
+			  })
+			  .catch((error) => {
+				// Show error message
+				document.getElementById('error-message').style.display = 'block';
+				document.getElementById('success-message').style.display = 'none';
+				console.error('There was a problem with the fetch operation:', error);
+				alert(error); // Optional: for quick debugging
+			  });
+			};
+		  
+			document
+			  .querySelector("form")
+			  .addEventListener("submit", handleSubmit);
+		  </script>
+		  
   
 		  
 
