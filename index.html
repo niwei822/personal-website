@@ -78,7 +78,7 @@
 				always open to new opportunities and interesting conversations.</p>
 			<div class="row">
 				<div class="col-8 col-12-small">
-					<form method="POST" action="/success" netlify>
+					<form method="POST" onsubmit="handleSubmit(event)" netlify>
 						<div class="row gtr-uniform gtr-50">
 							<div class="col-6 col-12-xsmall">
 								<input type="text" name="name" id="name" placeholder="Name" required />
@@ -97,6 +97,29 @@
 							</ul>
 						</div>
 					</form>
+					<script>
+						function handleSubmit(event) {
+						  event.preventDefault(); // Prevent default form submission
+					  
+						  const formData = new FormData(event.target);
+					  
+						  fetch(event.target.action, {
+							method: 'POST',
+							body: formData,
+						  })
+						  .then(response => {
+							if (response.ok) {
+							  alert('Thank you for your message!');
+							  event.target.reset();
+							} else {
+							  throw new Error('Network response was not ok.');
+							}
+						  })
+						  .catch(error => {
+							console.error('There was a problem with the fetch operation:', error);
+						  });
+						}
+					  </script>  
 				</div>
 				<div class="col-4 col-12-small">
 					<img src="images/email2.png" alt="contact me" style="width: 80%;">
